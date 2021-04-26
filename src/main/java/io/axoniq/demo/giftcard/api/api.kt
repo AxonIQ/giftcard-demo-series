@@ -6,6 +6,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.NamedQueries
 import javax.persistence.NamedQuery
+import java.util.Objects
 
 // Commands
 
@@ -44,6 +45,23 @@ class CountChangedUpdate
 )
 data class CardSummary(@Id var id: String, var initialValue: Int, var remainingValue: Int) {
     constructor() : this("", 0, 0)
+	override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+        if (javaClass != other?.javaClass) {
+            return false
+        }
+        other as CardSummary
+        if (id == other.id) {
+            return true
+        }
+        return false
+    }
+	
+	 override fun hashCode(): Int {
+        return Objects.hash(id);
+    }
 }
 
 data class CountCardSummariesResponse(val count: Int, val lastEvent: Long)
